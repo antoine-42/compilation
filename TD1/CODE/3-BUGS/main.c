@@ -55,8 +55,8 @@ void fibonacci(Fibo *fibo_values, unsigned int n) {
 
 void launch_fibonacci(Fibo *fibo_values, unsigned int max) {
 	fibo_values->max = max;
-	fibo_values->n_minus_1 = 1;
-	fibo_values->n_minus_2 = 2;
+	fibo_values->n_minus_1 = 0;
+	fibo_values->n_minus_2 = 1;
 	fibonacci(fibo_values, max);
 }
 
@@ -100,7 +100,7 @@ int main (int argc, char **argv) {
 
 	// Exercice 4 & 5: fibonacci
 	Fibo *fibo_values = malloc(100);
-    int n = 6;
+    int n = 3;
 	launch_fibonacci(fibo_values, n);
 	printf("4) fibonacci value F%d = %d\n", n, fibo_values->result);
 
