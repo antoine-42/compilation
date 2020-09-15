@@ -27,7 +27,7 @@ void print_results(unsigned int *v1,
 	printf("\t----------------------------------\n");
 
 	for (i=0; i<size; i++) {
-		printf("\t%d\t \t%d\t \t%g\n", 
+		printf("\t%d\t \t%d\t \t%u\n",
 				v1[i], v2[i], v3[i]);
 	}
 }

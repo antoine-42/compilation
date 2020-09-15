@@ -27,7 +27,4 @@ int main (int argc, char **argv) {
 	print_info();
 
 	compute(VECTOR_SIZE, REPEAT);
-
-	float useless = 0;
-
 }
