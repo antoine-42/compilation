@@ -26,7 +26,7 @@ void print_info() {
 
 
 unsigned int factorial(unsigned int val) {
-	if (val = 0) {
+	if (val == 0) {
 		return 1;
 	} else {
 		return factorial(val-1)*val;
@@ -68,7 +68,6 @@ unsigned int floor_mean(unsigned int *list, unsigned int nb) {
 		result += list[i];
 	}
 
-  memset(&nb,0,sizeof(unsigned int));
 	result /=nb;
 
 	return result;
@@ -95,13 +94,13 @@ int main (int argc, char **argv) {
 
 
 	// Exercice 3: another factorial
-	value = factorial(-1);
+	value = factorial(1);
 	printf("3) Another factorial value = %d\n", value);
 
 
 	// Exercice 4 & 5: fibonacci
-	Fibo *fibo_values = NULL;
-  int n = 6;
+	Fibo *fibo_values = malloc(100);
+    int n = 6;
 	launch_fibonacci(fibo_values, n);
 	printf("4) fibonacci value F%d = %d\n", n, fibo_values->result);
 
