@@ -10,8 +10,8 @@ EXE= TP3_1 \
 
 all: $(EXE)
 
-CXX=g++_910
-CC=gcc_910
+CXX=g++-9
+CC=gcc-9
 
 MPICC=mpicc
 

@@ -32,16 +32,16 @@ const pass_data my_pass_data =
 
 /* Enum to represent the collective operations */
 enum mpi_collective_code {
-#define DEFMPICOLLECTIVES( CODE, NAME ) CODE,
-#include "MPI_collectives.def"
-	LAST_AND_UNUSED_MPI_COLLECTIVE_CODE
-#undef DEFMPICOLLECTIVES
+    #define DEFMPICOLLECTIVES( CODE, NAME ) CODE,
+    #include "MPI_collectives.def"
+        LAST_AND_UNUSED_MPI_COLLECTIVE_CODE
+    #undef DEFMPICOLLECTIVES
 } ;
 
 /* Name of each MPI collective operations */
 #define DEFMPICOLLECTIVES( CODE, NAME ) NAME,
 const char *const mpi_collective_name[] = {
-#include "MPI_collectives.def"
+    #include "MPI_collectives.def"
 } ;
 #undef DEFMPICOLLECTIVES
 
@@ -290,6 +290,31 @@ void td2_through_the_cfg(function * fun)
 }
 
 
+/* TD3 - Q1 */
+void print_mpi_function(gimple * stmt){
+    tree current_fn_decl = gimple_call_fndecl(stmt);
+    const char* name = function_name(DECL_STRUCT_FUNCTION(current_fn_decl));
+    printf("%s", name);
+    return;
+}
+void td3_q1(function * fun)
+{
+    basic_block bb;
+    gimple_stmt_iterator gsi;
+    gimple *stmt;
+
+    FOR_EACH_BB_FN(bb,fun)
+    {
+        for (gsi=gsi_start_bb(bb); !gsi_end_p(gsi); gsi_next(&gsi))
+        {
+            stmt = gsi_stmt(gsi);
+            if (is_gimple_call(stmt)){
+                print_mpi_function(stmt);
+            }
+        }
+    }
+}
+
 
 /* My new pass inheriting from regular gimple pass */
 class my_pass : public gimple_opt_pass
@@ -309,9 +334,9 @@ class my_pass : public gimple_opt_pass
 		/* Gate function (shall we apply this pass?) */
 		bool gate (function *fun)
 		{
-			function_isol_print(fun);
-			printf("plugin: gate... \n");
-			td2_q3_q4_print_func_name(fun);
+//			function_isol_print(fun);
+//			printf("plugin: gate... \n");
+//			td2_q3_q4_print_func_name(fun);
 			return true;
 		}
 
@@ -320,32 +345,33 @@ class my_pass : public gimple_opt_pass
 		{
 			printf("plugin: execute...\n");
 
-			td_isol_print(/*TD*/2);
-
-			/******************************/
-			/**** TD2 - QUESTION 3 à 8 ****/
-			/******************************/
-
-			td2_through_the_cfg(fun);
-
-			/******************************/
-			/** TD2 - FIN QUESTION 3 à 8 **/
-			/******************************/
-
-
-			/******************************/
-			/****   TD2 - QUESTION 7   ****/
-			/******************************/
-
-			/* Skip system header functions */
-			if ( !in_system_header_at( fun->function_start_locus ) )
-				cfgviz_dump( fun, "0_ini", /*TD*/2 ) ;
-
-			/******************************/
-			/**   TD2 - FIN QUESTION 7   **/
-			/******************************/
-
-
+            td3_q1(fun);
+//			td_isol_print(/*TD*/2);
+//
+//			/******************************/
+//			/**** TD2 - QUESTION 3 à 8 ****/
+//			/******************************/
+//
+//			td2_through_the_cfg(fun);
+//
+//			/******************************/
+//			/** TD2 - FIN QUESTION 3 à 8 **/
+//			/******************************/
+//
+//
+//			/******************************/
+//			/****   TD2 - QUESTION 7   ****/
+//			/******************************/
+//
+//			/* Skip system header functions */
+//			if ( !in_system_header_at( fun->function_start_locus ) )
+//				cfgviz_dump( fun, "0_ini", /*TD*/2 ) ;
+//
+//			/******************************/
+//			/**   TD2 - FIN QUESTION 7   **/
+//			/******************************/
+//
+//
 
 			return 0;
 		}
@@ -391,5 +417,4 @@ plugin_init(struct plugin_name_args * plugin_info,
 
 	return 0;
 }
-
 

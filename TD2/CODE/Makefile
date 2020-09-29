@@ -9,7 +9,7 @@ EXE= TP2_1 \
 
 all: $(EXE)
 
-CXX=g++
+CXX=g++-9
 CC=gcc-9
 GCC=gcc-9
 
