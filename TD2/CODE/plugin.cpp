@@ -4,7 +4,6 @@
 
 #include "plugin.h"
 
-int plugin_is_GPL_compatible;
 
 //void callback_start_unit(
 //        void *gcc_data, void *user_data) {
@@ -19,6 +18,7 @@ plugin_init(struct plugin_name_args *plugin_info,
 //                      PLUGIN_START_UNIT,
 //                      callback_start_unit,
 //                      NULL);
+    printf("plugin init\n");
 
     struct register_pass_info pass_info;
     my_pass p(g);
