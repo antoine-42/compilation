@@ -14,7 +14,6 @@
 #include <basic-block.h>
 #include <gimple.h>
 #include <gimple-iterator.h>
-#include <bitmap.h>
 
 int plugin_is_GPL_compatible;
 
@@ -49,60 +48,19 @@ const char *const mpi_collective_name[] = {
 } ;
 #undef DEFMPICOLLECTIVES
 
-/* TD5 - Q1 */
-void td5_q1(function * fun)
+/* TD4 - Q5 */
+void td4_q5(function * fun)
 {
     basic_block bb;
-    basic_block runner;
-    edge p;
-    edge_iterator ie;
-    bitmap map;
+    vect<basic_block> dom_bb;
 
     FOR_EACH_BB_FN(bb,fun)
     {
-        if(EDGE_COUNT(bb->preds) >= 2){
-            FOR_EACH_EDGE(p, ie, bb->preds){
-                runner = p->src;
-                doms_b = get_immediate_dominator(CDI_DOMINATORS, bb);
-                while(runner != doms_b){
-                    if(1 == bitmap_set_bit(&map[runner->index],)){
-                        break;
-                    }
-                    bitmap_set_bit(&map[runner->index],);
-
-                    runner = get_immediate_dominator(CDI_DOMINATORS, runner);
-                }
-            }
+        dom_bb = get_all_dominated_blocks(CDI_POST_DOMINATORS, bb);
+        for(i = 0; i < dom_bb.size(); i++) {
+            
         }
     }
-}
-/* TD5 - Q2 */
-void td5_q2(function * fun){
-    basic_block b;
-    edge p;
-    edge_iterator ie;
-    bitmap map;
-
-    FOR_EACH_BB_FN(b,fun){
-        FOR_EACH_EDGE(p, ie, b->preds){
-            basic_block runner = p->src;
-            basic_block dom = p->dest;
-            if(runner == EXIT_BLOCK_PTR_FOR_FN(fun)){
-                continue;
-            }
-            dom = get_immediate_dominator(CDI_DOMINATORS, b)
-            while(runner != b){
-                if(!bitmap_set_bit(&map[runner->index],dom)){
-                    break;
-                }
-                runner = get_immediate_dominator(CDI_DOMINATORS, runner)
-            }
-        }
-    }
-}
-/* TD5 - Q3 */
-void td5_q3(function * fun){
-
 }
 
 
@@ -118,7 +76,7 @@ public:
     }
 
     unsigned int execute (function *fun) {
-        td5_q1(fun);
+        td4_q5(fun);
         return 0;
     }
 };
