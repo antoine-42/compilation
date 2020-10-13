@@ -15,6 +15,7 @@
 #include <gimple-iterator.h>
 #include <bitmap.h>
 #include <c-family/c-pragma.h>
+#include <stdexcept>
 
 int plugin_is_GPL_compatible;
 

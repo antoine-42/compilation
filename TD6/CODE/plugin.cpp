@@ -44,8 +44,7 @@ static void handle_pragma_instrument_function_4(cpp_reader *ARG_UNUSED(dummy)){
 
     if (cfun)
     {
-        printf ("#pragma instrument function is not allowed inside functions\n");
-        return;
+        throw std::logic_error( "#pragma instrument function is not allowed inside functions\n" );
     }
 
     token = pragma_lex (&x);
