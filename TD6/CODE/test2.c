@@ -3,6 +3,7 @@
 
 #include <mpi.h>
 
+#pragma instrument function test(te,st)
 
 int main(int argc, char * argv[])
 {

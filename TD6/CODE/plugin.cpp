@@ -37,6 +37,28 @@ static void handle_pragma_instrument_function_3(cpp_reader *ARG_UNUSED(dummy)){
         token = pragma_lex (&x);
     }
 }
+/* td6 q4 */
+static void handle_pragma_instrument_function_4(cpp_reader *ARG_UNUSED(dummy)){
+    enum cpp_ttype token;
+    tree x;
+
+    if (cfun)
+    {
+        printf ("#pragma instrument function is not allowed inside functions\n");
+        return;
+    }
+
+    token = pragma_lex (&x);
+
+    while (token != CPP_EOF){
+        if (token == CPP_NAME){
+            const char *op = IDENTIFIER_POINTER(x);
+            printf("%s\n", op);
+        }
+
+        token = pragma_lex (&x);
+    }
+}
 
 
 int
@@ -45,6 +67,7 @@ plugin_init(struct plugin_name_args *plugin_info,
     printf("plugin init\n");
     c_register_pragma("instrument", "function1", handle_pragma_instrument_function_1);
     c_register_pragma("instrument", "function2", handle_pragma_instrument_function_2);
-    c_register_pragma("instrument", "function", handle_pragma_instrument_function_3);
+    c_register_pragma("instrument", "function3", handle_pragma_instrument_function_3);
+    c_register_pragma("instrument", "function", handle_pragma_instrument_function_4);
     return 0;
 }
