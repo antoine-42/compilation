@@ -7,7 +7,9 @@
 int main(int argc, char * argv[])
 {
   MPI_Init(&argc, &argv);
+
 #pragma instrument function test
+
   int a = 2;
   int b = 3;
   int c=0;

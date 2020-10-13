@@ -13,7 +13,6 @@ static void handle_pragma_instrument_function_1(cpp_reader *ARG_UNUSED(dummy)){
 static void handle_pragma_instrument_function_2(cpp_reader *ARG_UNUSED(dummy)){
     enum cpp_ttype token;
     tree x;
-    printf("k\n");
 
     token = pragma_lex (&x);
 
@@ -31,4 +30,3 @@ plugin_init(struct plugin_name_args *plugin_info,
     c_register_pragma("instrument", "function", handle_pragma_instrument_function_2);
     return 0;
 }
-
