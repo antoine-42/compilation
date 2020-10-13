@@ -1,31 +1,29 @@
-all: TP6_1.pgr
+CXX=g++-9
+CC=gcc-9
+GCC=gcc-9
 
-CPP=g++_910
-CC=gcc_910
+MPICC=mpicc
+OMPI_MPICC=gcc-9
+OMPI_MPICXX=gcc-9
 
-FILE=main.c mock.c
+PLUGIN_FLAGS=-I`$(CC) -print-file-name=plugin`/include -g -Wall -fno-rtti -shared -fPIC
 
-MPI_PATH=`dirname \` which mpicc \` `
-MPI_FLAGS=-I$(MPI_PATH)/../include/mpi -L$(MPI_PATH)/../lib -lmpi
-PLUGIN_FLAGS=-I`gcc -print-file-name=plugin`/include -g -Wall -fno-rtti -shared -fPIC
+CFLAGS=-g -O3 -Wall -I/usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/plugin/include    -pthread -Wl,-rpath -Wl,/usr/lib/openmpi -Wl,--enable-new-dtags -L/usr/lib/openmpi -lmpi_cxx -lmpi
+CXXFLAGS=-g -O3 -Wall -I/usr/lib/gcc/x86_64-pc-linux-gnu/10.2.0/plugin/include -fno-rtti    -pthread -Wl,-rpath -Wl,/usr/lib/openmpi -Wl,--enable-new-dtags -L/usr/lib/openmpi -lmpi_cxx -lmpi
+OBJS=plugin.o
+EXEC=plugin.so
 
-CFLAGS=-g -O3
+plugin.o: plugin.cpp
+	$(GCC) $(CXXFLAGS) -fPIC -c $< -o $@
 
+plugin.so: $(OBJS)
+	$(GCC) $(CXXFLAGS) -shared $< -o $@
 
-libplugin.so: plugin_TP2_1.cpp
-	 $(CPP) $(PLUGIN_FLAGS) -o libplugin.so $<
-
-%.so: plugin_%.cpp
-	$(CPP) $(PLUGIN_FLAGS) -o $@ $<
-
-%.pgr: %.so $(FILE)
-	gcc $(FILE) $(CFLAGS) -o $@ $(MPI_FLAGS) -fplugin=./$< 
-
-%.pdf: %.dot
-	dot -Tpdf $< -o $@
+test: $(EXEC)
+	$(GCC) $(CFLAGS)  -fplugin=./plugin.so ./test2.c
 
 clean:
-	rm -rf *.pgr *.pdf
+	rm -rf $(EXE) *.o *.so
 
 clean_all: clean
-	rm -rf libplugin.so *.dot
+	rm -rf libplugin*.so *.dot
